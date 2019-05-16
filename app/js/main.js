@@ -102,43 +102,25 @@ function fetchText() {
 const textButton = document.getElementById('text-btn');
 textButton.addEventListener('click', fetchText);
 
-
-// HEAD request ----------
-
-function headRequest() {
-  fetch('examples/words.txt', {
-    method: 'HEAD'
-  })
+// fecth data
+function fetchDATA() {
+  fetch('http://jsonplaceholder.typicode.com/users')
     .then(validateResponse)
-    .then(logSize)
-    .catch(logError);
+    .then(readResponseAsJSON)
+    .then(dataResult) //jika promise berhasil maka akan masuk ke logResult
+    .catch(logError); //jika promise gagal maka akan masuk ke logError
 }
-const headButton = document.getElementById('head-btn');
-headButton.addEventListener('click', headRequest);
-
-
-// POST request ----------
-
-/* NOTE: Never send unencrypted user credentials in production! */
-function postRequest() {
-  const formData = new FormData(document.getElementById('msg-form'));
-  const messageHeaders = new Headers({
-    'Content-Type': 'application/json',
-    // 'Content-Length': 'kittens' // Content-Length can't be modified!
-    'X-Custom': 'hello world',
-    // 'Y-Custom': 'this will not work' // Y-Custom is not accepted by our echo server!
-  })
-  fetch('http://localhost:5000/', {
-    method: 'POST',
-    // body: formData,
-    body: JSON.stringify({ lab: 'fetch', status: 'fun' }),
-    headers: messageHeaders
-  })
-    .then(validateResponse)
-    .then(readResponseAsText)
-    .then(showText)
-    .catch(logError);
+const jsonDATA = document.getElementById('data-btn');
+jsonDATA.addEventListener('click', fetchDATA);
+function dataResult(result) {
+	result.forEach(function(value,index){
+		const res = document.getElementById('data-response');
+	const c=document.createElement('p');
+	res.appendChild(c);
+	c.innerHTML = value.name+'   '+value.email;
+	});
+	
+	
+  console.log(result);
 }
-const postButton = document.getElementById('post-btn');
-postButton.addEventListener('click', postRequest);
 
