@@ -29,6 +29,7 @@ function validateResponse(response) {
     throw Error(response.statusText);
   }
   return response;
+  //untuk memberikan pesan dan menguji apakah fungsi bekerja dengan benar
 }
 
 function readResponseAsJSON(response) {
@@ -69,8 +70,8 @@ function fetchJSON() {
   fetch('examples/animals.json')
     .then(validateResponse)
     .then(readResponseAsJSON)
-    .then(logResult)
-    .catch(logError);
+    .then(logResult) //jika promise berhasil maka akan masuk ke logResult
+    .catch(logError); //jika promise gagal maka akan masuk ke logError
 }
 const jsonButton = document.getElementById('json-btn');
 jsonButton.addEventListener('click', fetchJSON);
@@ -82,8 +83,8 @@ function fetchImage() {
   fetch('examples/fetching.jpg')
     .then(validateResponse)
     .then(readResponseAsBlob)
-    .then(showImage)
-    .catch(logError);
+    .then(showImage) //jika berhasil mengambil gambar maka, gambar akan di tampilkan
+    .catch(logError); // jika tdk berhasil mengambilgambar maka, gambar tdk akan ditampilkan
 }
 const imgButton = document.getElementById('img-btn');
 imgButton.addEventListener('click', fetchImage);
